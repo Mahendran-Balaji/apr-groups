@@ -25,4 +25,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/payslip', function () {
+        return view('webzeee_payslip');
+    })->name('webzeee_payslip');
+
+
 });
