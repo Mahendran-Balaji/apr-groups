@@ -17,67 +17,37 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow">
-                                    <i data-feather="grid"></i>
-                                    <span data-key="t-apps">Apps</span>
+                                    <i data-feather="users"></i>
+                                    <span data-key="t-authentication">Employee Records</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li>
-                                        <a href="apps-calendar.html">
-                                            <span data-key="t-calendar">Calendar</span>
-                                        </a>
-                                    </li>
-        
-                                    <li>
-                                        <a href="apps-chat.html">
-                                            <span data-key="t-chat">Chat</span>
-                                        </a>
-                                    </li>
-        
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">
-                                            <span data-key="t-email">Email</span>
-                                        </a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="apps-email-inbox.html" data-key="t-inbox">Inbox</a></li>
-                                            <li><a href="apps-email-read.html" data-key="t-read-email">Read Email</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">
-                                            <span data-key="t-invoices">Invoices</span>
-                                        </a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="apps-invoices-list.html" data-key="t-invoice-list">Invoice List</a></li>
-                                            <li><a href="apps-invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">
-                                            <span data-key="t-contacts">Contacts</span>
-                                        </a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="apps-contacts-grid.html" data-key="t-user-grid">User Grid</a></li>
-                                            <li><a href="apps-contacts-list.html" data-key="t-user-list">User List</a></li>
-                                            <li><a href="apps-contacts-profile.html" data-key="t-profile">Profile</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="{{ route('add_employee') }}" data-key="t-login">New Employee</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-login">Current Employee</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-register">Old Employee</a></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow">
                                     <i data-feather="users"></i>
-                                    <span data-key="t-authentication">Authentication</span>
+                                    <span data-key="t-authentication">Employee Payslip</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="auth-login.html" data-key="t-login">Login</a></li>
-                                    <li><a href="auth-register.html" data-key="t-register">Register</a></li>
-                                    <li><a href="auth-recoverpw.html" data-key="t-recover-password">Recover Password</a></li>
-                                    <li><a href="auth-lock-screen.html" data-key="t-lock-screen">Lock Screen</a></li>
-                                    <li><a href="auth-logout.html" data-key="t-logout">Log Out</a></li>
-                                    <li><a href="auth-confirm-mail.html" data-key="t-confirm-mail">Confirm Mail</a></li>
-                                    <li><a href="auth-email-verification.html" data-key="t-email-verification">Email Verification</a></li>
-                                    <li><a href="auth-two-step-verification.html" data-key="t-two-step-verification">Two Step Verification</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-login">New Payslip</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-register">Saved Payslip</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow">
+                                    <i data-feather="users"></i>
+                                    <span data-key="t-authentication">Leave Records</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="javascript: void(0);" data-key="t-login">Casual Leave</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-register">Sick Leave</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-recover-password">Mediacal Leave</a></li>
+                                    <li><a href="javascript: void(0);" data-key="t-recover-password">Sandwitch Leave</a></li>
                                 </ul>
                             </li>
 

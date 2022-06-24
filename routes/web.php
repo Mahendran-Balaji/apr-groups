@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PayslipController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +28,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/payslip', function () {
-        return view('webzeee_payslip');
-    })->name('webzeee_payslip');
+    Route::get('/payslip',[PayslipController::class,'index'])->name('webzeee_payslip');
 
+    Route::get('/new-employee',[EmployeeController::class,'index'])->name('add_employee');
+    Route::post('/add-employee',[EmployeeController::class,'join_new_employee'])->name('add_new_employee');
 
 });

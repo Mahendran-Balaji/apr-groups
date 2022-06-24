@@ -17,6 +17,11 @@ class WZDesignationTableSeeder extends Seeder
     public function run()
     {
         $designation = [
+           [
+                'designation' => 'Managing Director',
+                'visitor' => request()->ip(),
+                'created_at' =>Carbon::now(),
+            ],
             [
               'designation' => 'Chief Executive Officer',
               'visitor' => request()->ip(),

@@ -19,6 +19,7 @@
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
         <script>
         function forprint(){
             if (!window.print){
@@ -181,7 +182,7 @@ a
             <!-- Start right Content here -->
             <!-- ============================================================== -->
             <div class="main-content">
-
+          
                 <div class="page-content">
                     <div class="container-fluid">
 
@@ -191,7 +192,7 @@ a
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h4 class="mb-sm-0 font-size-18">Webzeee Payslip</h4>
 
-                                 
+                                    {{ $employee_id }}
 
                                 </div>
                             </div>
@@ -225,7 +226,20 @@ a
                     Employee ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^A-Z 0-9]/g,'');"/>
+                    
+                    <select id="empid" name="empid">
+                        <option selected="true" disabled="disabled">Select Designation</option> 
+                        <?php
+                        foreach($employee_id as $eid)
+                        {
+                            echo $eid;
+                        ?>
+                            
+                        <?php
+                        }
+                        ?>
+        
+                    </select>
                     </td>
                 </tr>
                                         
@@ -243,24 +257,7 @@ a
                     Designation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <select>
-                        <option selected="true" disabled="disabled">Select Designation</option> 
-                        <option value="Chief Executive Officer">Chief Executive Officer</option>
-                        <option value="Chief Financial Officer">Chief Financial Officer</option>
-                        <option value="Junior Web Designer">Junior Web Designer</option>
-                        <option value="Senior Web Designer">Senior Web Designer</option>
-                        <option value="Senior Image Editor">Senior Image Editor</option>
-                        <option value="Front End Developer">Front End Developer</option>
-                        <option value="Junior Web Developer">Junior Web Developer</option>
-                        <option value="Senior Web Developer">Senior Web Developer</option>
-                        <option value="SEO Analyst">SEO Analyst</option>
-                        <option value="Senior Graphic Designer">Senior Graphic Designer</option>
-                        <option value="System Administrator">System Administrator</option>
-                        <option value="Creative Content Writer">Creative Content Writer</option>
-                        <option value="Senior Finance Executive">Senior Finance Executive</option>
-                        <option value="House Keeping">House Keeping</option>
-        
-                    </select>
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-z A-Z.]/g,'');"/>
                     </td>
                 </tr>
                      
@@ -518,7 +515,9 @@ a
         <script src="assets/libs/feather-icons/feather.min.js"></script>
         <script src="assets/libs/pace-js/pace.min.js"></script>
         <script src="assets/js/app.js"></script>
-       
+        <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+
+        <script src="assets/js/pages/form-advanced.init.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script>

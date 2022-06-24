@@ -14,7 +14,7 @@ class WzDesignationController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
