@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="robots" content="noindex, nofollow">
         <meta content="Webzeee" name="author" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- App favicon -->
         <link rel="icon" type="image/png" sizes="16x16" href="images/webzeee/favicon.png">
 
@@ -192,7 +193,7 @@ a
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h4 class="mb-sm-0 font-size-18">Webzeee Payslip</h4>
 
-                                    {{ $employee_id }}
+                                 
 
                                 </div>
                             </div>
@@ -228,16 +229,12 @@ a
                     <td>
                     
                     <select id="empid" name="empid">
-                        <option selected="true" disabled="disabled">Select Designation</option> 
+                        <option selected="true" disabled="disabled">Select Employee ID</option> 
                         <?php
-                        foreach($employee_id as $eid)
-                        {
-                            echo $eid;
+                            foreach ($employee_id as $empid) {
                         ?>
-                            
-                        <?php
-                        }
-                        ?>
+                            <option value="{{ $empid->employee_id }}">{{ $empid->employee_id }}</option>
+                        <?php } ?>
         
                     </select>
                     </td>
@@ -518,6 +515,37 @@ a
         <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
 
         <script src="assets/js/pages/form-advanced.init.js"></script>
+
+        <script>
+    $(document).ready(function(){
+        $("#empid").on('change', function(e) {
+            e.preventDefault();
+            var employeeID = this.value;
+            alert(employeeID);
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+            $.ajax({
+                type: "post",
+                url: "/get-details-for-payslip",
+                data: "{data: employeeID}",
+                success:function(data){
+                alert(data);  
+                },  
+                error: function (reject){
+                   alert(reject);
+                    /* var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function(key, val){
+                        $("#" + key + "_error").text(val[0]);
+                    });*/
+            }
+            
+            });
+        });
+    });
+    </script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script>
@@ -527,7 +555,10 @@ a
       changeYear: true
     });
   } );
-  </script> <script src="assets/js/calculation.js"></script>
+  </script>
+  
+  
+  <script src="assets/js/calculation.js"></script>
     </body>
 
 

@@ -86,6 +86,11 @@
                                                     </ul>
                                                 </div>
                                             @endif
+                                            @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+@endif
                                         </p>
                                     </div>
                                     <div class="card-body p-4">
@@ -95,12 +100,12 @@
                                                 <div>
                                                     <div class="mb-3">
                                                         <label for="example-text-input" class="form-label">First Name</label>
-                                                        <input class="form-control" type="text" value="{{ old('first_name') }}" name="first_name" id="example-text-input">
+                                                        <input class="form-control" type="text" value="" name="first_name" id="example-text-input">
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="example-email-input" class="form-label">Personal Email ID</label>
-                                                        <input class="form-control" type="email" value="{{ old('personal_email_id') }}" name="personal_email_id" id="example-email-input">
+                                                        <input class="form-control" type="email" value="" name="personal_email_id" id="example-email-input">
                                                     </div>
                                                   
                                                    
@@ -108,7 +113,7 @@
                                                         <label for="example-url-input" class="form-label">Date of Birth</label>
                                                         
                                                         
-                                                        <input class="form-control" type="text" value="{{ old('dob') }}" name="dob" id="datepicker-dob">
+                                                        <input class="form-control" type="text" value="" name="dob" id="datepicker-dob">
                                                     
                                                     </div>
                                                   
@@ -150,8 +155,8 @@
                                                         <label for="example-url-input" class="form-label">Gender</label>
                                                         <select class="form-select" name="gender">
                                                             <option value="">Select</option>
-                                                            <option value="Male">Male</option>
-                                                            <option value="Female">Female</option>
+                                                            <option value="M">Male</option>
+                                                            <option value="F">Female</option>
                                                         </select>
                                                     </div>
                                                    
@@ -190,15 +195,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Step 2 : Official Information</h4>
                                         <p class="card-title-desc">
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
+                                           &nbsp;
                                         </p>
                                     </div>
                                     <div class="card-body p-4">
@@ -240,9 +237,12 @@
                                                     <div class="mb-3">
                                                         <label for="example-url-input" class="form-label">Designation</label>
                                                         <select class="form-select" name="designation">
-                                                            <option>Select</option>
-                                                            <option>Large select</option>
-                                                            <option>Small select</option>
+                                                            <option value="">Select</option>
+                                                            <?php
+                                                            foreach ($employeeDesignation as $empdesignation) {
+                                                            ?>
+                                                            <option value="{{ $empdesignation->wz_id }}">{{ $empdesignation->designation }}</option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -266,15 +266,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title">Step 3 : Salary Account Information</h4>
                                         <p class="card-title-desc">
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
+                                            &nbsp;
                                         </p>
                                     </div>
                                     <div class="card-body p-4">

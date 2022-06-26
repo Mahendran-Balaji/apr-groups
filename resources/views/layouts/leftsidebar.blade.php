@@ -9,7 +9,7 @@
                             <li class="menu-title" data-key="t-menu">Menu</li>
 
                             <li>
-                                <a href="index-2.html">
+                                <a href="{{ route('dashboard') }}">
                                     <i data-feather="home"></i>
                                     <span data-key="t-dashboard">Dashboard</span>
                                 </a>
@@ -33,7 +33,7 @@
                                     <span data-key="t-authentication">Employee Payslip</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="javascript: void(0);" data-key="t-login">New Payslip</a></li>
+                                    <li><a href="{{ route('webzeee_payslip') }}" data-key="t-login">New Payslip</a></li>
                                     <li><a href="javascript: void(0);" data-key="t-register">Saved Payslip</a></li>
                                 </ul>
                             </li>

@@ -7,42 +7,60 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Officialinformation;
 use App\Models\Personalinformation;
 use App\Models\Salaryinformation;
+use App\Models\Designation;
 use Auth;
 use Session; 
 use Response;
 use Exception;
 use Log;
-
+use DB;
 class EmployeeController extends Controller
 {
+    private $currentEmployeeStatus;
+    public function __construct()
+    {
+        $this->currentEmployeeStatus='1';
+    }
+
     public function index()
     {
-        return view('new_employee');
+        $employeeDesignation = Designation::select('wz_id','designation')->where('status', '1')->get();
+        return view('new_employee')->with('employeeDesignation',$employeeDesignation);
+    }
+
+    public function getCurrentEmployee()
+    {
+        return Officialinformation::select(DB::raw("CONCAT(prefix,emp_id) AS employee_id, CONCAT(first_name,' ',last_name) AS Full_name,wz_designation.designation,offical_mail_id,joining_date"))->join('wz_designation', 'employee_official_information.emp_designation', '=', 'wz_designation.wz_id')->where('employee_official_information.status',$this->currentEmployeeStatus)->get();
+    }
+
+    public function get_details_for_payslip(Request $request)
+    {
+        return $request->all();
     }
 
     public function join_new_employee(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|regex:/(^([a-z A-Z]+)(\d+)?$)/u|min:4|max:30',
-            'last_name' => 'required|regex:/(^([a-z A-Z]+)(\d+)?$)/u|min:1|max:50',
-            'personal_email_id' => 'required|email|unique:employee_personal_information,personal_mail_id',
-            'personal_contact_number' => 'required|min:10|max:10|regex:/^([0-9]*)$/|unique:employee_personal_information,contact_number',
-            'dob' => 'required|date_format:Y-m-d',
-            'gender' => 'required|in:Male,Female',
-            'maritalstatus' => 'required|in:Married,Unmarried',
-            'aadhaar_number' => 'required',
-            'pan_number' => 'required',
-            'persent_address' => 'required',
-            'permanent_address' => 'required',
-            'official_email_id' => 'required',
-            'doj' => 'required',
-            'current_salary' => 'required',
-            'designation' => 'required',
-            'reporting_head' => 'required',
-            'account_holder_name' => 'required',
-            'bank_name' => 'required',
-            'account_number' => 'required',
-            'ifsc_code' => 'required',
+            'first_name' => 'required|regex:/(^([a-zA-Z ]+)(\d+)?$)/u|min:4|max:30',
+            'last_name' => 'nullable|regex:/(^([a-z A-Z]+)(\d+)?$)/u|min:1|max:50',
+            'personal_email_id' => 'nullable|unique:employee_personal_information,personal_mail_id',
+            'personal_contact_number' => 'nullable|max:10|regex:/^([0-9]*)$/|unique:employee_personal_information,contact_number',
+            'dob' => 'nullable|date_format:Y-m-d',
+            'gender' => 'required|in:M,F',
+            'maritalstatus' => 'nullable|in:Married,Unmarried',
+            'aadhaar_number' => 'nullable',
+            'pan_number' => 'nullable',
+            'persent_address' => 'nullable',
+            'permanent_address' => 'nullable',
+            'official_email_id' => 'nullable',
+            'doj' => 'nullable',
+            'current_salary' => 'nullable',
+            'designation' => 'nullable',
+            'reporting_head' => 'nullable|max:30',
+            'account_holder_name' => 'nullable',
+            'bank_name' => 'nullable',
+            'account_number' => 'nullable',
+            'ifsc_code' => 'nullable',
             ],
             [ 
                 'first_name.required' => 'The first name field can not be blank value.',
@@ -61,7 +79,7 @@ class EmployeeController extends Controller
         );
         
         if ($validator->fails()) {
-            return redirect('add_employee')->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput();
         }
         else
         {
@@ -87,26 +105,26 @@ class EmployeeController extends Controller
                     $opersonalData = new Personalinformation();
                     $opersonalData->emp_id = $getLastInsertID;
                     $opersonalData->gender  = $request->gender;
-                    $opersonalData->contact_number = $request->contact_number;
-                    $opersonalData->personal_mail_id = $request->personal_mail_id;
+                    $opersonalData->contact_number = $request->personal_contact_number;
+                    $opersonalData->personal_mail_id = $request->personal_email_id;
                     $opersonalData->persent_address  = $request->persent_address;
-                    $opersonalData->perment_address = $request->perment_address;
+                    $opersonalData->perment_address = $request->permanent_address;
                     $opersonalData->aadhaar_number = $request->aadhaar_number;
                     $opersonalData->pan_number  = $request->pan_number;
-                    $opersonalData->date_of_birth = $request->date_of_birth;
-                    $opersonalData->martial_status = $request->martial_status;
+                    $opersonalData->date_of_birth = $request->dob;
+                    $opersonalData->martial_status = $request->maritalstatus;
                     $opersonalData->save();
 
                     /* Insert Salary Information */
                     $salaryData = new Salaryinformation();
                     $salaryData->emp_id = $getLastInsertID;
                     $salaryData->account_holder_name  = $request->account_holder_name;
-                    $salaryData->account_bank_name = $request->account_bank_name;
-                    $salaryData->account_bank_number = $request->account_bank_number;
-                    $salaryData->bank_ifsc_code  = $request->bank_ifsc_code;
+                    $salaryData->account_bank_name = $request->bank_name;
+                    $salaryData->account_bank_number = $request->account_number;
+                    $salaryData->bank_ifsc_code  = $request->ifsc_code;
                     $salaryData->save();
 
-                    return redirect('add_employee')->with('success', 'Created successfully.');
+                    return back()->with('success', 'Created successfully.');
                 }
                 else{
                     throw new Exception('Something went wrong');
@@ -116,7 +134,7 @@ class EmployeeController extends Controller
             }
             catch(Exception $e)
             {
-                return redirect('add_employee')->withErrors($e->getMessage())->withInput();
+                return back()->withErrors($e->getMessage())->withInput();
             }
         }
     }
