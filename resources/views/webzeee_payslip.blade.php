@@ -245,7 +245,7 @@ a
                     Employee Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-z A-Z.]/g,'');"/>
+                    <input type="text" readonly id="emp_name"/>
                     </td>
                 </tr>
                 
@@ -254,7 +254,7 @@ a
                     Designation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-z A-Z.]/g,'');"/>
+                    <input type="text" readonly id="emp_designation"/>
                     </td>
                 </tr>
                      
@@ -263,7 +263,7 @@ a
                     Date of Joining &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" id="datepicker"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" readonly id="emp_doj"/>
                     </td>
                 </tr>
                                         
@@ -272,7 +272,7 @@ a
                     PAN No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" id="panno" onkeyup="this.value=this.value.replace(/[^A-Za-z0-9]/g,''); this.value = this.value.toUpperCase();"/>
+                    <input type="text" readonly id="emp_panno"/>
                     </td>
                 </tr>
                                         
@@ -281,7 +281,7 @@ a
                     Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-z A-Z]/g,'');"/>
+                    <input type="text" readonly id="emp_bank_name"/>
                     </td>
                 </tr>
                                         
@@ -290,7 +290,7 @@ a
                     Bank Account No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" readonly id="emp_bank_account_number"/>
                     </td>
                     
                 </tr>
@@ -517,49 +517,37 @@ a
         <script src="assets/js/pages/form-advanced.init.js"></script>
 
         <script>
-    $(document).ready(function(){
-        $("#empid").on('change', function(e) {
+        $(document).ready(function(){
+        $("#empid").on('change', function(e) 
+        {
             e.preventDefault();
             var employeeID = this.value;
-            alert(employeeID);
-            $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-            $.ajax({
-                type: "post",
-                url: "/get-details-for-payslip",
-                data: "{data: employeeID}",
-                success:function(data){
-                alert(data);  
-                },  
-                error: function (reject){
-                   alert(reject);
-                    /* var response = $.parseJSON(reject.responseText);
-                    $.each(response.errors, function(key, val){
-                        $("#" + key + "_error").text(val[0]);
-                    });*/
-            }
             
+            $.getJSON('get-details-for-payslip/'+employeeID, function(data) {
+                $.each(data, function(i, field)
+                {
+                    $("#emp_name").val(field.Full_name);
+                    $("#emp_designation").val(field.designation);
+                    $("#emp_panno").val(field.pan_number);
+                    $("#emp_doj").val(field.joining_date);
+                    $("#emp_bank_name").val(field.account_bank_name);
+                    $("#emp_bank_account_number").val(field.account_bank_number);
+                    
+                    
+                });
             });
         });
     });
     </script>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        $( "#datepicker" ).datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
     });
-  } );
-  </script>
-  
-  
-  <script src="assets/js/calculation.js"></script>
+    </script>
+    <script src="assets/js/calculation.js"></script>
     </body>
-
-
 </html>

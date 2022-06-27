@@ -33,9 +33,25 @@ class EmployeeController extends Controller
         return Officialinformation::select(DB::raw("CONCAT(prefix,emp_id) AS employee_id, CONCAT(first_name,' ',last_name) AS Full_name,wz_designation.designation,offical_mail_id,joining_date"))->join('wz_designation', 'employee_official_information.emp_designation', '=', 'wz_designation.wz_id')->where('employee_official_information.status',$this->currentEmployeeStatus)->get();
     }
 
-    public function get_details_for_payslip(Request $request)
+    public function get_details_for_payslip($empid)
     {
-        return $request->all();
+        
+       $getEmployeeRecordForPayslip = Officialinformation::select(
+        DB::raw("
+            CONCAT(employee_official_information.prefix,employee_official_information.emp_id) AS employee_id,
+            CONCAT(employee_official_information.first_name,' ',employee_official_information.last_name) AS Full_name,
+            employee_official_information.joining_date,
+            employee_salary_information.account_bank_name,
+            employee_salary_information.account_bank_number,
+            employee_personal_information.pan_number,
+            wz_designation.designation
+            "))->join('employee_salary_information', 'employee_official_information.emp_id', '=', 'employee_salary_information.emp_id')
+            ->join('wz_designation', 'employee_official_information.emp_designation', '=', 'wz_designation.wz_id')
+            ->join('employee_personal_information','employee_personal_information.emp_id','=','employee_official_information.emp_id')
+            ->where('employee_official_information.emp_id',substr($empid,2))->get();
+       return Response::json($getEmployeeRecordForPayslip);
+      
+
     }
 
     public function join_new_employee(Request $request)
