@@ -41,6 +41,7 @@ class EmployeeController extends Controller
             CONCAT(employee_official_information.prefix,employee_official_information.emp_id) AS employee_id,
             CONCAT(employee_official_information.first_name,' ',employee_official_information.last_name) AS Full_name,
             employee_official_information.joining_date,
+            employee_official_information.current_salary,
             employee_salary_information.account_bank_name,
             employee_salary_information.account_bank_number,
             employee_personal_information.pan_number,

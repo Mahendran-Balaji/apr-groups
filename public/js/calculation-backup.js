@@ -13,45 +13,13 @@ $(document).ready(function(){
     var salaryadv = 0;
     var otherexp=0;
    var bonus=0;
- 
-    var totalearn = (basicpay+hra+da+medical+convey+music+bonus);
+    var totalearn = (basicpay+hra+da+medical+convey+music);
     var totalded = (pf+ptax+incometax+lop+salaryadv+otherexp);
     $('#tearn').val(totalearn);
     $('#tdeduct').val(totalded);
   
-    $('#bonus').on('change',function(){
-        var getBanusValue = $("#bonus").val();
-        console.log(getBanusValue);
-       /* var tearn = parseInt($('#tearn').val());
-
-        var totearn = Number(getBanusValue)+Number(tearn);
-
-       /* var basicpay = (tearn*40)/100;
-        var hra = (tearn*20)/100;
-        var da = (tearn*23)/100;
-        var medical = (tearn*10)/100;    
-        var convey = (tearn*6)/100; 
-        var music = (tearn*1)/100;
-   
-        var totearn = Number(getBanusValue)+Number(tearn);
-        
-        $('#basicpay') .val(basicpay);
-        $('#hra') .val(hra);
-        $('#da') .val(da);
-        $('#medical') .val(medical);
-        $('#convey') .val(convey);
-        $('#music') .val(music);
-        $('#netpay').val(totearn);
-          var convertnumbers = convertNumberToWords(totearn);
-          var withrupees = convertnumbers;
-           $('#netpaywords').val(withrupees+'Only');*/
-     }); 
-
-     
  $('#tearn').on('change',function(){
     var tearn = $(this).val();
-    console.log(tearn);
-
     var basicpay = (tearn*40)/100;
     var hra = (tearn*20)/100;
     var da = (tearn*23)/100;
